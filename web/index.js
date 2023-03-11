@@ -85,7 +85,7 @@ customElements.define("website-counter", class extends HTMLElement {
   }
 
   _showCount(show) {
-    const host = this.getAttribute("url") || "http://localhost:8000";
+    const host = this.getAttribute("url") || "https://website-counter.onrender.com";
     if (this.currentlyShown === show) return;
     this.currentlyShown = show;
 
