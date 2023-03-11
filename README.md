@@ -94,8 +94,11 @@ Here are some frequently asked questions about Website Counter:
 * Q: Can I reset or delete my counter?
 * A: NO! Because: why would you?? Gah, alright. If you absolutely want to... Open an issue on github and i'll look into it.
 ---
+* Q: Any guarantees that my data will be backupped and such?
+* A: Absolutely not. The data is running on a [render free tier](https://render.com) and probably gone tomorrow.
+---
 * Q: User privacy is very important for me. What do you do with the data?
-* A: Well, the counter is public. The data to track the Unique User is randomized for each website, and not guaranteed to be unique between multiple websites, so it's impossible for me to track users over multiple pages that are including the counter.
+* A: Well, the counter is public. The data to track the Unique User is randomized for each website, and not guaranteed to be unique between multiple websites, so it's impossible for me to track users over multiple pages that are including the counter. The data is stored on a [render free tier](https://render.com)
 
 
 ## Support
