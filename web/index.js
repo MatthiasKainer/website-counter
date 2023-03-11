@@ -48,10 +48,30 @@ function getUserId() {
   return userId;
 }
 
+function getCookie(name) {
+  var cookie = {};
+  document.cookie.split(";").forEach(function(el) {
+    var [key,value] = el.split("=");
+    cookie[key.trim()] = value;
+  })
+  return cookie[name];
+}
+
+function getSessionId() {
+  const sessionId = getCookie("session") || uuidv4()
+
+  const now = new Date();
+  const time = now.getTime();
+  const expireTime = time + 1000 * 600; // let's keep this session for 10 min more
+  now.setTime(expireTime);
+  document.cookie = `session=${sessionId};expires=${now.toUTCString()};path=/`;
+
+}
+
 let cached;
 let blocked = false;
 
-function getData(host, show, sessionId) {
+function getData(host, show) {
   show = show || "visitors"
   const referrer = window.location.host;
 
@@ -62,11 +82,11 @@ function getData(host, show, sessionId) {
   }
 
   if (blocked) {
-    return new Promise(resolve => setTimeout(() => getData(host, show, sessionId).then(resolve), 50))
+    return new Promise(resolve => setTimeout(() => getData(host, show).then(resolve), 50))
   }
 
   blocked = true;
-  return fetch(`${host}/count/${referrer}/${getUserId()}/${sessionId}`).then(r => r.json()).then((counter) => {
+  return fetch(`${host}/count/${referrer}/${getUserId()}/${getSessionId()}`).then(r => r.json()).then((counter) => {
     cached = counter
     return counter[show]
   })
@@ -80,8 +100,7 @@ customElements.define("website-counter", class extends HTMLElement {
     style.textContent = css;
     shadowRoot.appendChild(style);
     this.counter = document.createElement("div")
-    this.sessionId = uuidv4();
-    shadowRoot.appendChild(this.counter);    
+    shadowRoot.appendChild(this.counter);
   }
 
   _showCount(show) {
@@ -89,7 +108,7 @@ customElements.define("website-counter", class extends HTMLElement {
     if (this.currentlyShown === show) return;
     this.currentlyShown = show;
 
-    getData(host, show, this.sessionId).then(result => {
+    getData(host, show).then(result => {
       this.counter.textContent = "";
       this.counter.append(...createCounter(result))
     })
