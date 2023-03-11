@@ -65,7 +65,7 @@ function getSessionId() {
   const expireTime = time + 1000 * 600; // let's keep this session for 10 min more
   now.setTime(expireTime);
   document.cookie = `session=${sessionId};expires=${now.toUTCString()};path=/`;
-
+  return sessionId
 }
 
 let cached;
