@@ -1,0 +1,15 @@
+{
+  "name": "website-counter",
+  "version": "1.0.0",
+  "description": "A counter for your website, just as we used to have it in the 90s!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"stop counting, start living\"; exit 0"
+  },
+  "keywords": [
+    "website",
+    "counter"
+  ],
+  "author": "Matthias Kainer",
+  "license": "Beerware"
+}
